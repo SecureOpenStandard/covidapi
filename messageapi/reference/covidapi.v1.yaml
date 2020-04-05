@@ -22,15 +22,24 @@ paths:
           schema:
             type: object
             properties:
-              message:
-                type: string
-                description: 'JWE message from an authority '
-                pattern: '^[/-A-Za-z0-9+=_.]+$'
-              tokenid:
-                type: string
-                description: 'signaling token id, utilized in the event of abuse '
-            required:
-              - tokenid
+              messages:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      description: 'JWE message from an authority '
+                      pattern: '^[/-A-Za-z0-9+=_.]+$'
+                    tokenid:
+                      type: string
+                      description: 'signaling token id, utilized in the event of abuse'
+                    timestamp:
+                      type: number
+                      description: unixtimestamp
+                  required:
+                    - tokenid
+                    - timestamp
         '404':
           description: Not Found
           schema: {}
@@ -56,6 +65,8 @@ paths:
           required: true
           description: deletion token
           pattern: '^[/-A-Za-z0-9+=_.]+$'
+      tags:
+        - suggested
     parameters:
       - type: string
         name: uuid
